@@ -11,8 +11,27 @@ import {
   Hash, 
   Bell, 
   User, 
-  LogOut 
+  LogOut,
+  Sparkles,
+  Settings
 } from 'lucide-react'
+import { ThemeToggle } from '@/components/theme-toggle'
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarSeparator,
+} from '@/components/ui/sidebar'
 
 const navigation = [
   { name: 'Home', href: '/timeline', icon: Home },
@@ -25,84 +44,117 @@ const navigation = [
 const userNavigation = [
   { name: 'Notifications', href: '/notifications', icon: Bell },
   { name: 'Profile', href: '/profile/me', icon: User },
+  { name: 'Settings', href: '/settings', icon: Settings },
 ]
 
-export function Sidebar() {
+export function AppSidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="flex h-full w-64 flex-col bg-white border-r border-gray-200">
-      {/* Logo */}
-      <div className="flex h-16 items-center justify-center border-b border-gray-200">
-        <h1 className="text-2xl font-bold text-gray-900">UNIFY</h1>
-      </div>
+    <Sidebar variant="inset" className="border-r-0">
+      <SidebarHeader className="border-b border-border/50 bg-gradient-to-r from-primary/5 via-primary/3 to-accent/5">
+        <div className="flex items-center justify-between px-4 py-3">
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/70">
+              <Sparkles className="h-4 w-4 text-primary-foreground" />
+            </div>
+            <div className="flex flex-col">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                UNIFY
+              </h1>
+              <p className="text-xs text-muted-foreground">Creator Platform</p>
+            </div>
+          </div>
+          <ThemeToggle />
+        </div>
+      </SidebarHeader>
 
-      {/* Main Navigation */}
-      <nav className="flex-1 space-y-1 px-4 py-4">
-        {navigation.map((item) => {
-          const isActive = pathname === item.href
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={cn(
-                'group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
-                isActive
-                  ? 'bg-gray-100 text-gray-900'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-              )}
-            >
-              <item.icon
-                className={cn(
-                  'mr-3 h-5 w-5 flex-shrink-0',
-                  isActive ? 'text-gray-900' : 'text-gray-400 group-hover:text-gray-500'
-                )}
-              />
-              {item.name}
-            </Link>
-          )
-        })}
-      </nav>
+      <SidebarContent className="gap-0">
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground/80 uppercase tracking-wider">
+            Main
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {navigation.map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <SidebarMenuItem key={item.name}>
+                    <SidebarMenuButton 
+                      asChild 
+                      isActive={isActive}
+                      className={cn(
+                        "group relative overflow-hidden transition-all duration-200",
+                        isActive && "bg-primary/10 text-primary shadow-sm"
+                      )}
+                    >
+                      <Link href={item.href}>
+                        <item.icon className="h-4 w-4" />
+                        <span className="font-medium">{item.name}</span>
+                        {isActive && (
+                          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent" />
+                        )}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
 
-      {/* User Navigation */}
-      <nav className="px-4 py-4 border-t border-gray-200">
-        {userNavigation.map((item) => {
-          const isActive = pathname === item.href
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={cn(
-                'group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
-                isActive
-                  ? 'bg-gray-100 text-gray-900'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-              )}
-            >
-              <item.icon
-                className={cn(
-                  'mr-3 h-5 w-5 flex-shrink-0',
-                  isActive ? 'text-gray-900' : 'text-gray-400 group-hover:text-gray-500'
-                )}
-              />
-              {item.name}
-            </Link>
-          )
-        })}
-        
-        {/* Logout */}
-        <button className="group flex w-full items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-gray-900 transition-colors">
-          <LogOut className="mr-3 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" />
-          Logout
-        </button>
-      </nav>
+        <SidebarSeparator className="mx-4" />
 
-      {/* Footer */}
-      <div className="px-4 py-4 border-t border-gray-200">
-        <p className="text-xs text-gray-500 text-center">
-          powered by <span className="font-bold">ARCatAR</span>
-        </p>
-      </div>
-    </div>
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground/80 uppercase tracking-wider">
+            Account
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {userNavigation.map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <SidebarMenuItem key={item.name}>
+                    <SidebarMenuButton 
+                      asChild 
+                      isActive={isActive}
+                      className={cn(
+                        "group relative overflow-hidden transition-all duration-200",
+                        isActive && "bg-primary/10 text-primary shadow-sm"
+                      )}
+                    >
+                      <Link href={item.href}>
+                        <item.icon className="h-4 w-4" />
+                        <span className="font-medium">{item.name}</span>
+                        {isActive && (
+                          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent" />
+                        )}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
+              
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  className="group relative overflow-hidden transition-all duration-200 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span className="font-medium">Logout</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter className="border-t border-border/50 bg-gradient-to-r from-muted/20 to-muted/10">
+        <div className="flex items-center justify-center px-4 py-3">
+          <p className="text-xs text-muted-foreground/80">
+            © 2024 UNIFY Platform
+          </p>
+        </div>
+      </SidebarFooter>
+    </Sidebar>
   )
 }
