@@ -3,15 +3,16 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { 
-  Home, 
-  MessageCircle, 
-  Calendar, 
-  Star, 
-  Hash, 
-  Bell, 
-  User, 
-  LogOut 
+import {
+  Home,
+  MessageCircle,
+  Calendar,
+  Star,
+  Hash,
+  Bell,
+  User,
+  LogOut,
+  Sparkles
 } from 'lucide-react'
 
 const navigation = [
@@ -31,14 +32,20 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="flex h-full w-64 flex-col bg-white border-r border-gray-200">
+    <div className="flex h-full w-72 flex-col bg-card/50 backdrop-blur-xl border-r border-border/50">
       {/* Logo */}
-      <div className="flex h-16 items-center justify-center border-b border-gray-200">
-        <h1 className="text-2xl font-bold text-gray-900">UNIFY</h1>
+      <div className="flex h-20 items-center justify-center px-6 py-6">
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary to-[hsl(var(--gradient-end))] blur-lg opacity-50" />
+            <Sparkles className="relative h-8 w-8 text-primary" />
+          </div>
+          <h1 className="text-3xl font-black gradient-text">UNIFY</h1>
+        </div>
       </div>
 
       {/* Main Navigation */}
-      <nav className="flex-1 space-y-1 px-4 py-4">
+      <nav className="flex-1 space-y-2 px-4 py-6">
         {navigation.map((item) => {
           const isActive = pathname === item.href
           return (
@@ -46,26 +53,29 @@ export function Sidebar() {
               key={item.name}
               href={item.href}
               className={cn(
-                'group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
+                'group relative flex items-center gap-3 px-4 py-3.5 text-sm font-semibold rounded-xl transition-all duration-200',
                 isActive
-                  ? 'bg-gray-100 text-gray-900'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
+                  : 'text-muted-foreground hover:bg-secondary hover:text-foreground hover:scale-105'
               )}
             >
+              {isActive && (
+                <div className="absolute inset-0 bg-gradient-to-r from-primary to-[hsl(var(--gradient-end))] rounded-xl opacity-100 transition-opacity" />
+              )}
               <item.icon
                 className={cn(
-                  'mr-3 h-5 w-5 flex-shrink-0',
-                  isActive ? 'text-gray-900' : 'text-gray-400 group-hover:text-gray-500'
+                  'relative h-5 w-5 flex-shrink-0 transition-transform duration-200',
+                  isActive ? 'text-primary-foreground scale-110' : 'text-muted-foreground group-hover:scale-110'
                 )}
               />
-              {item.name}
+              <span className="relative">{item.name}</span>
             </Link>
           )
         })}
       </nav>
 
       {/* User Navigation */}
-      <nav className="px-4 py-4 border-t border-gray-200">
+      <nav className="px-4 py-4 space-y-2 border-t border-border/50">
         {userNavigation.map((item) => {
           const isActive = pathname === item.href
           return (
@@ -73,34 +83,37 @@ export function Sidebar() {
               key={item.name}
               href={item.href}
               className={cn(
-                'group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
+                'group relative flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200',
                 isActive
-                  ? 'bg-gray-100 text-gray-900'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
+                  : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
               )}
             >
+              {isActive && (
+                <div className="absolute inset-0 bg-gradient-to-r from-primary to-[hsl(var(--gradient-end))] rounded-xl opacity-100" />
+              )}
               <item.icon
                 className={cn(
-                  'mr-3 h-5 w-5 flex-shrink-0',
-                  isActive ? 'text-gray-900' : 'text-gray-400 group-hover:text-gray-500'
+                  'relative h-5 w-5 flex-shrink-0',
+                  isActive ? 'text-primary-foreground' : 'text-muted-foreground'
                 )}
               />
-              {item.name}
+              <span className="relative">{item.name}</span>
             </Link>
           )
         })}
-        
+
         {/* Logout */}
-        <button className="group flex w-full items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-gray-900 transition-colors">
-          <LogOut className="mr-3 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" />
+        <button className="group flex w-full items-center gap-3 px-4 py-3 text-sm font-semibold text-muted-foreground rounded-xl hover:bg-destructive/10 hover:text-destructive transition-all duration-200">
+          <LogOut className="h-5 w-5 flex-shrink-0" />
           Logout
         </button>
       </nav>
 
       {/* Footer */}
-      <div className="px-4 py-4 border-t border-gray-200">
-        <p className="text-xs text-gray-500 text-center">
-          powered by <span className="font-bold">ARCatAR</span>
+      <div className="px-6 py-4 border-t border-border/50">
+        <p className="text-xs text-muted-foreground text-center">
+          powered by <span className="font-bold gradient-text">ARCatAR</span>
         </p>
       </div>
     </div>
