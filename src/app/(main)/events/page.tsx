@@ -7,16 +7,17 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
-// Mock data
+// Mock data with real images
 const mockEvents = [
   {
     id: '1',
     title: 'Live Performance & Q&A',
     creator: {
       name: 'Flaujae',
-      avatar: '/avatars/flaujae.jpg',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200',
       verified: true
     },
+    image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800',
     date: 'March 15, 2024',
     time: '7:00 PM EST',
     location: 'Virtual Event',
@@ -32,9 +33,10 @@ const mockEvents = [
     title: 'Morning Yoga Session',
     creator: {
       name: 'Sarah Chen',
-      avatar: '/avatars/sarah.jpg',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200',
       verified: true
     },
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800',
     date: 'March 18, 2024',
     time: '8:00 AM EST',
     location: 'Virtual Event',
@@ -50,9 +52,10 @@ const mockEvents = [
     title: 'Coding Bootcamp: React Advanced',
     creator: {
       name: 'Marcus Dev',
-      avatar: '/avatars/marcus.jpg',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200',
       verified: true
     },
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800',
     date: 'March 20, 2024',
     time: '3:00 PM EST',
     location: 'Virtual Event',
@@ -68,9 +71,10 @@ const mockEvents = [
     title: 'Fashion Show Behind the Scenes',
     creator: {
       name: 'Emma Rose',
-      avatar: '/avatars/emma.jpg',
+      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200',
       verified: true
     },
+    image: 'https://images.unsplash.com/photo-1558769132-cb1aea3c8a76?w=800',
     date: 'March 22, 2024',
     time: '6:00 PM EST',
     location: 'New York, NY',
@@ -145,44 +149,58 @@ export default function EventsPage() {
               className="group glass hover-lift hover:shadow-glow transition-all duration-300 animate-in overflow-hidden"
               style={{ animationDelay: `${index * 50}ms` }}
             >
-              <CardContent className="p-6">
-                {/* Event Header */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3 flex-1">
-                    <Avatar className="h-12 w-12 ring-2 ring-primary/30">
-                      <AvatarImage src={event.creator.avatar} alt={event.creator.name} />
-                      <AvatarFallback className="gradient-bg-intense text-primary-foreground font-bold">
-                        {event.creator.name[0]}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold text-foreground truncate">{event.creator.name}</span>
-                        {event.creator.verified && (
-                          <Sparkles className="h-4 w-4 text-primary flex-shrink-0" />
-                        )}
+              <CardContent className="p-0">
+                {/* Event Image */}
+                {event.image && (
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    {event.featured && (
+                      <div className="absolute top-3 right-3">
+                        <div className="h-10 w-10 rounded-full bg-warning/90 backdrop-blur shadow-glow flex items-center justify-center">
+                          <TrendingUp className="h-5 w-5 text-warning-foreground" />
+                        </div>
                       </div>
+                    )}
+                    <div className="absolute top-3 left-3">
                       <Badge
                         variant="secondary"
-                        className={`${tierColors[event.tier as keyof typeof tierColors]} text-xs rounded-full mt-1`}
+                        className={`${tierColors[event.tier as keyof typeof tierColors]} backdrop-blur`}
                       >
                         {event.tier}
                       </Badge>
                     </div>
                   </div>
-                  {event.featured && (
-                    <div className="flex-shrink-0">
-                      <div className="h-8 w-8 rounded-full bg-warning shadow-glow flex items-center justify-center">
-                        <TrendingUp className="h-4 w-4 text-warning-foreground" />
+                )}
+
+                <div className="p-6">
+                  {/* Event Header */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3 flex-1">
+                      <Avatar className="h-10 w-10 ring-2 ring-primary/30">
+                        <AvatarImage src={event.creator.avatar} alt={event.creator.name} />
+                        <AvatarFallback className="gradient-bg-intense text-primary-foreground font-bold">
+                          {event.creator.name[0]}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-foreground truncate">{event.creator.name}</span>
+                          {event.creator.verified && (
+                            <Sparkles className="h-4 w-4 text-primary flex-shrink-0" />
+                          )}
+                        </div>
                       </div>
                     </div>
-                  )}
-                </div>
+                  </div>
 
-                {/* Event Title */}
-                <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
-                  {event.title}
-                </h3>
+                  {/* Event Title */}
+                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                    {event.title}
+                  </h3>
 
                 {/* Event Details */}
                 <div className="space-y-3 mb-6">
@@ -204,22 +222,23 @@ export default function EventsPage() {
                   </div>
                 </div>
 
-                {/* Attendees Progress */}
-                <div className="mb-6">
-                  <div className="w-full bg-muted rounded-full h-2">
-                    <div
-                      className="gradient-bg-intense h-2 rounded-full transition-all shadow-glow"
-                      style={{ width: `${(event.attendees / event.maxAttendees) * 100}%` }}
-                    />
+                  {/* Attendees Progress */}
+                  <div className="mb-6">
+                    <div className="w-full bg-muted rounded-full h-2">
+                      <div
+                        className="gradient-bg-intense h-2 rounded-full transition-all shadow-glow"
+                        style={{ width: `${(event.attendees / event.maxAttendees) * 100}%` }}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* Action Button */}
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-gradient">{event.price}</span>
-                  <Button className="gradient-bg-intense text-primary-foreground shadow-glow hover:shadow-glow-lg transition-all duration-200 hover:scale-105">
-                    Register Now
-                  </Button>
+                  {/* Action Button */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-bold text-gradient">{event.price}</span>
+                    <Button className="gradient-bg-intense text-primary-foreground shadow-glow hover:shadow-glow-lg transition-all duration-200 hover:scale-105">
+                      Register Now
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
