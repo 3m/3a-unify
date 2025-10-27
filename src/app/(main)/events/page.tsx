@@ -104,46 +104,28 @@ export default function EventsPage() {
   )
 
   return (
-    <div className="min-h-screen gradient-bg">
-      {/* Header */}
-      <div className="sticky top-0 z-10 glass-strong border-b">
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl gradient-bg-intense shadow-glow">
-                <Calendar className="h-6 w-6 text-primary-foreground" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gradient">Events</h1>
-                <p className="text-sm text-muted-foreground">Discover upcoming creator events</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Category filters */}
-          <div className="flex gap-2 flex-wrap">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setSelectedCategory(category)}
-                className={selectedCategory === category
-                  ? 'gradient-bg-intense text-primary-foreground shadow-glow'
-                  : 'glass hover:shadow-glow'
-                }
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </div>
+    <div className="space-y-6">
+      {/* Category filters */}
+      <div className="flex gap-2 flex-wrap">
+        {categories.map((category) => (
+          <Button
+            key={category}
+            variant={selectedCategory === category ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setSelectedCategory(category)}
+            className={selectedCategory === category
+              ? 'gradient-bg-intense text-primary-foreground shadow-glow'
+              : 'glass hover:shadow-glow'
+            }
+          >
+            {category}
+          </Button>
+        ))}
       </div>
 
       {/* Events Grid */}
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredEvents.map((event, index) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {filteredEvents.map((event, index) => (
             <Card
               key={event.id}
               className="group glass hover-lift hover:shadow-glow transition-all duration-300 animate-in overflow-hidden"
@@ -243,7 +225,6 @@ export default function EventsPage() {
               </CardContent>
             </Card>
           ))}
-        </div>
 
         {filteredEvents.length === 0 && (
           <div className="text-center py-12">
