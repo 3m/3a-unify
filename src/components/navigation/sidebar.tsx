@@ -51,18 +51,18 @@ export function AppSidebar() {
   const pathname = usePathname()
 
   return (
-    <Sidebar variant="inset" className="border-r-0">
-      <SidebarHeader className="border-b border-border/50 bg-gradient-to-r from-primary/5 via-primary/3 to-accent/5">
-        <div className="flex items-center justify-between px-4 py-3">
+    <Sidebar variant="inset" className="border-r border-border/50">
+      <SidebarHeader className="border-b border-border/50 bg-gradient-to-r from-primary/5 via-primary/3 to-accent/5 backdrop-blur">
+        <div className="flex items-center justify-between px-4 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/70">
-              <Sparkles className="h-4 w-4 text-primary-foreground" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary/80 to-primary/60 shadow-lg shadow-primary/20">
+              <Sparkles className="h-5 w-5 text-primary-foreground" />
             </div>
             <div className="flex flex-col">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent">
                 UNIFY
               </h1>
-              <p className="text-xs text-muted-foreground">Creator Platform</p>
+              <p className="text-xs text-muted-foreground font-medium">Creator Platform</p>
             </div>
           </div>
           <ThemeToggle />
@@ -80,19 +80,22 @@ export function AppSidebar() {
                 const isActive = pathname === item.href
                 return (
                   <SidebarMenuItem key={item.name}>
-                    <SidebarMenuButton 
-                      asChild 
+                    <SidebarMenuButton
+                      asChild
                       isActive={isActive}
                       className={cn(
-                        "group relative overflow-hidden transition-all duration-200",
-                        isActive && "bg-primary/10 text-primary shadow-sm"
+                        "group relative overflow-hidden transition-all duration-200 hover:bg-accent/50",
+                        isActive && "bg-primary/10 text-primary shadow-sm hover:bg-primary/15 border-l-2 border-primary"
                       )}
                     >
-                      <Link href={item.href}>
-                        <item.icon className="h-4 w-4" />
+                      <Link href={item.href} className="flex items-center gap-3">
+                        <item.icon className={cn(
+                          "h-4 w-4 transition-all duration-200",
+                          isActive ? "text-primary scale-110" : "text-muted-foreground group-hover:text-foreground"
+                        )} />
                         <span className="font-medium">{item.name}</span>
                         {isActive && (
-                          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent" />
+                          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent -z-10" />
                         )}
                       </Link>
                     </SidebarMenuButton>
@@ -115,19 +118,22 @@ export function AppSidebar() {
                 const isActive = pathname === item.href
                 return (
                   <SidebarMenuItem key={item.name}>
-                    <SidebarMenuButton 
-                      asChild 
+                    <SidebarMenuButton
+                      asChild
                       isActive={isActive}
                       className={cn(
-                        "group relative overflow-hidden transition-all duration-200",
-                        isActive && "bg-primary/10 text-primary shadow-sm"
+                        "group relative overflow-hidden transition-all duration-200 hover:bg-accent/50",
+                        isActive && "bg-primary/10 text-primary shadow-sm hover:bg-primary/15 border-l-2 border-primary"
                       )}
                     >
-                      <Link href={item.href}>
-                        <item.icon className="h-4 w-4" />
+                      <Link href={item.href} className="flex items-center gap-3">
+                        <item.icon className={cn(
+                          "h-4 w-4 transition-all duration-200",
+                          isActive ? "text-primary scale-110" : "text-muted-foreground group-hover:text-foreground"
+                        )} />
                         <span className="font-medium">{item.name}</span>
                         {isActive && (
-                          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent" />
+                          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent -z-10" />
                         )}
                       </Link>
                     </SidebarMenuButton>
@@ -136,8 +142,15 @@ export function AppSidebar() {
               })}
               
               <SidebarMenuItem>
-                <SidebarMenuButton 
-                  className="group relative overflow-hidden transition-all duration-200 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                <SidebarMenuButton
+                  onClick={() => {
+                    // In production, this would call your auth logout function
+                    // For now, we'll redirect to the login page
+                    if (confirm('Are you sure you want to logout?')) {
+                      window.location.href = '/login'
+                    }
+                  }}
+                  className="group relative overflow-hidden transition-all duration-200 text-muted-foreground hover:text-destructive hover:bg-destructive/10 cursor-pointer"
                 >
                   <LogOut className="h-4 w-4" />
                   <span className="font-medium">Logout</span>

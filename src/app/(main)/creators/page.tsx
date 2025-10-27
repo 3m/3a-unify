@@ -8,12 +8,13 @@ import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Input } from '@/components/ui/input'
 
-// Mock data
+// Mock data with real avatars
 const mockCreators = [
   {
     id: '1',
     name: 'Flaujae',
-    avatar: '/avatars/flaujae.jpg',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200',
+    coverImage: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800',
     bio: 'Music Artist & Basketball Player | Creating exclusive content for my fans',
     subscribers: '125K',
     posts: 234,
@@ -25,7 +26,8 @@ const mockCreators = [
   {
     id: '2',
     name: 'Sarah Chen',
-    avatar: '/avatars/sarah.jpg',
+    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200',
+    coverImage: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800',
     bio: 'Fitness & Wellness Coach | Daily workouts and nutrition tips',
     subscribers: '89K',
     posts: 567,
@@ -37,7 +39,8 @@ const mockCreators = [
   {
     id: '3',
     name: 'Marcus Dev',
-    avatar: '/avatars/marcus.jpg',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200',
+    coverImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800',
     bio: 'Software Engineer | Tech tutorials and coding tips',
     subscribers: '156K',
     posts: 432,
@@ -49,7 +52,8 @@ const mockCreators = [
   {
     id: '4',
     name: 'Emma Rose',
-    avatar: '/avatars/emma.jpg',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200',
+    coverImage: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800',
     bio: 'Fashion & Lifestyle | Behind the scenes & exclusive photoshoots',
     subscribers: '234K',
     posts: 891,
@@ -61,7 +65,8 @@ const mockCreators = [
   {
     id: '5',
     name: 'Alex Turner',
-    avatar: '/avatars/alex.jpg',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200',
+    coverImage: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800',
     bio: 'Food & Travel | Culinary adventures around the world',
     subscribers: '67K',
     posts: 345,
@@ -73,7 +78,8 @@ const mockCreators = [
   {
     id: '6',
     name: 'Olivia Moore',
-    avatar: '/avatars/olivia.jpg',
+    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200',
+    coverImage: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800',
     bio: 'Digital Artist | Creating amazing art and sharing my process',
     subscribers: '112K',
     posts: 678,

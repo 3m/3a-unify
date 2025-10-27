@@ -1,11 +1,29 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
 import { AppSidebar } from '@/components/navigation/sidebar'
 import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
+
+// Map routes to display names
+const routeTitles: Record<string, string> = {
+  '/timeline': 'Timeline',
+  '/chats': 'Chats',
+  '/events': 'Events',
+  '/creators': 'Creators',
+  '/interests': 'Interests',
+  '/notifications': 'Notifications',
+  '/profile/me': 'Profile',
+  '/settings': 'Settings',
+}
 
 export default function MainLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const pathname = usePathname()
+  const title = routeTitles[pathname] || 'Dashboard'
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -14,7 +32,7 @@ export default function MainLayout({
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <div className="h-4 w-px bg-border" />
-            <h1 className="text-lg font-semibold">Dashboard</h1>
+            <h1 className="text-lg font-semibold">{title}</h1>
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
